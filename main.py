@@ -33,6 +33,9 @@ contact_info_buttons = [
 
 calendar = GoogleCalendarManager()
 
+
+
+######
 # --- FUNCIONES DE BASE DE DATOS ---
 def init_db():
     conn = sqlite3.connect(DB_PATH)
