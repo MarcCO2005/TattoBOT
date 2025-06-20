@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
+import os
+import json
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
@@ -13,12 +15,17 @@ class GoogleCalendarManager:
         self.calendar_id = '4c7be1a48e4f6449a2e1ee189c4596235a6181e9851c71721d357ca2d8281936@group.calendar.google.com'  
 
     def authenticate(self):
-        service_account_file = 'tattostudio-24280dee57b9.json'
-
-        credentials = service_account.Credentials.from_service_account_file(
-            service_account_file,
+        credentials_info = os.environ.get("GOOGLE_CREDENTIALS_JSON")
+        if credentials_info is None:
+            raise Exception("No se encontró la variable de entorno GOOGLE_CREDENTIALS_JSON")
+        credentials_dict = json.loads(credentials_info)
+        credentials = service_account.Credentials.from_service_account_info(
+            credentials_dict,
             scopes=['https://www.googleapis.com/auth/calendar']
         )
+        return self.build_service(credentials)
+
+    def build_service(self, credentials):
         service = build('calendar', 'v3', credentials=credentials)
         return service
 
