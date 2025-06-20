@@ -8,9 +8,10 @@ from google_calendar import GoogleCalendarManager
 from datetime import datetime, timedelta, date
 import calendar as pycalendar
 
-TOKEN = '7551871687:AAFziyofUUqgIGkumgv5BmesS0zO-FjC0LE'
+import os
+TOKEN = os.environ.get("TELEGRAM_TOKEN")
 DB_PATH = 'citas.db'
-OWNER_ID = "522262079"  # Cambia esto por tu user_id real si es necesario
+OWNER_ID = "5222620791"  # Cambia esto por tu user_id real si es necesario
 AGREGAR_HORARIO, ELEGIR_MES, ELEGIR_DIA, ESPERAR_HORA_HORARIO = 100, 101, 102, 103
 
 # Estados de la conversaci
